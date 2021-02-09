@@ -12,7 +12,7 @@ namespace PickerViewSample
             {
                 return (value as string).Split(',');
             }
-            catch (Exception)
+            catch
             {
                 return string.Empty;
             }

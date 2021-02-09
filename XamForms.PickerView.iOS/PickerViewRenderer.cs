@@ -8,22 +8,21 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XamForms.PickerView;
 using XamForms.PickerView.iOS;
+using Font = Xamarin.Forms.Font;
 
 [assembly: ExportRenderer(typeof(PickerView), typeof(PickerViewRenderer))]
 
 namespace XamForms.PickerView.iOS
 {
-	public class PickerViewRenderer : ViewRenderer<PickerView, UIPickerView>
+    public class PickerViewRenderer : ViewRenderer<PickerView, UIPickerView>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<PickerView> e)
         {
             base.OnElementChanged(e);
 
-            var pickerView = Control;
-
             if (Control == null)
             {
-                SetNativeControl(pickerView = new UIPickerView(RectangleF.Empty));
+                SetNativeControl(new UIPickerView(RectangleF.Empty));
             }
 
             if (e.NewElement != null)
@@ -61,7 +60,7 @@ namespace XamForms.PickerView.iOS
                 Font.SystemFontOfSize(Element.FontSize) :
                 Font.OfSize(Element.FontFamily, Element.FontSize);
             var nativeFont = font.ToUIFont();
-            Control.Model = new MyDataModel(this.Element.ItemsSource, row =>
+            Control.Model = new MyDataModel(Element.ItemsSource, row =>
             {
                 Element.SelectedIndex = row;
             }, nativeFont);
@@ -83,7 +82,7 @@ namespace XamForms.PickerView.iOS
         }
     }
 
-    class MyDataModel : UIPickerViewModel
+    internal class MyDataModel : UIPickerViewModel
     {
         private readonly IList<string> _list = new List<string>();
         private readonly Action<int> _selectedHandler;
@@ -103,27 +102,29 @@ namespace XamForms.PickerView.iOS
             }
         }
 
-        public override System.nint GetComponentCount(UIPickerView pickerView)
+        public override nint GetComponentCount(UIPickerView pickerView)
         {
             return 1;
         }
 
-        public override System.nint GetRowsInComponent(UIPickerView pickerView, System.nint component)
+        public override nint GetRowsInComponent(UIPickerView pickerView, nint component)
         {
             return _list.Count;
         }
 
-        public override string GetTitle(UIPickerView pickerView, System.nint row, System.nint component)
+        public override string GetTitle(UIPickerView pickerView, nint row, nint component)
         {
             return _list[(int)row];
         }
 
         public override UIView GetView(UIPickerView pickerView, nint row, nint component, UIView view)
         {
-            UILabel label = new UILabel(pickerView.Bounds);
-            label.Font = _nativeFont;
-            label.Text = _list[(int)row];
-            label.TextAlignment = UITextAlignment.Center;
+            UILabel label = new UILabel(pickerView.Bounds)
+            {
+                Font = _nativeFont,
+                Text = _list[(int)row],
+                TextAlignment = UITextAlignment.Center
+            };
             return label;
 
             //return base.GetView(pickerView, row, component, view);
@@ -134,5 +135,4 @@ namespace XamForms.PickerView.iOS
             _selectedHandler?.Invoke((int)row);
         }
     }
-
 }

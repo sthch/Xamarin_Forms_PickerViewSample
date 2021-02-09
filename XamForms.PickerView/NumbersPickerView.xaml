@@ -1,13 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:XamForms.PickerView"
              x:Class="XamForms.PickerView.NumbersPickerView">
-    <!--    <ContentView.BindingContext>
-        <local:NumbersPickerViewModel/>
-    </ContentView.BindingContext>
--->
+
     <ContentView.Resources>
         <ResourceDictionary>
             <local:IntegerDigitVisibleConverter x:Key="intDigitConv" />
@@ -22,103 +18,57 @@
                     <local:NumbersPickerViewModel />
                 </StackLayout.BindingContext>
 
+                <StackLayout.Resources>
+                    <Style TargetType="local:PickerView">
+                        <Setter Property="WidthRequest" Value="{Binding ColumnWidth}" />
+                        <Setter Property="FontSize" Value="{Binding FontSize}" />
+                        <Setter Property="ItemsSource" Value="{Binding Numbers}" />
+                    </Style>
+                </StackLayout.Resources>
+
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=9}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=9}"
                     SelectedIndex="{Binding IntegerDigit9}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=8}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=8}"
                     SelectedIndex="{Binding IntegerDigit8}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=7}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=7}"
                     SelectedIndex="{Binding IntegerDigit7}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=6}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=6}"
                     SelectedIndex="{Binding IntegerDigit6}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=5}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=5}"
                     SelectedIndex="{Binding IntegerDigit5}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=4}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=4}"
                     SelectedIndex="{Binding IntegerDigit4}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=3}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=3}"
                     SelectedIndex="{Binding IntegerDigit3}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=2}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=2}"
                     SelectedIndex="{Binding IntegerDigit2}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=1}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=1}"
                     SelectedIndex="{Binding IntegerDigit1}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding IntegerDigitLength,
-                    Converter={StaticResource intDigitConv}, ConverterParameter=0}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding IntegerDigitLength, Converter={StaticResource intDigitConv}, ConverterParameter=0}"
                     SelectedIndex="{Binding IntegerDigit0}" />
                 <Label
                     HorizontalOptions="Start"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding DecimalDigitLength,
-                    Converter={StaticResource decDigitConv}, ConverterParameter=0}"
+                    IsVisible="{Binding DecimalDigitLength, Converter={StaticResource decDigitConv}, ConverterParameter=0}"
                     VerticalOptions="Center"
                     Text="." />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding DecimalDigitLength,
-                    Converter={StaticResource decDigitConv}, ConverterParameter=0}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding DecimalDigitLength, Converter={StaticResource decDigitConv}, ConverterParameter=0}"
                     SelectedIndex="{Binding DecimalDigit0}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding DecimalDigitLength,
-                    Converter={StaticResource decDigitConv}, ConverterParameter=1}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding DecimalDigitLength, Converter={StaticResource decDigitConv}, ConverterParameter=1}"
                     SelectedIndex="{Binding DecimalDigit1}" />
                 <local:PickerView
-                    WidthRequest="{Binding ColumnWidth}"
-                    FontSize="{Binding FontSize}"
-                    IsVisible="{Binding DecimalDigitLength,
-                    Converter={StaticResource decDigitConv}, ConverterParameter=2}"
-                    ItemsSource="{Binding Numbers}"
+                    IsVisible="{Binding DecimalDigitLength, Converter={StaticResource decDigitConv}, ConverterParameter=2}"
                     SelectedIndex="{Binding DecimalDigit2}" />
             </StackLayout>
         </ScrollView>

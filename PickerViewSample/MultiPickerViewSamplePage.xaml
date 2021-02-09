@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PickerViewSample.MultiPickerViewSamplePage"
-             xmlns:local="clr-namespace:PickerViewSample"
              xmlns:ext="clr-namespace:XamForms.PickerView;assembly=XamForms.PickerView"
-             Padding="10"
+             x:Class="PickerViewSample.MultiPickerViewSamplePage"
+             Style="{StaticResource CommonContentPage}"
              Title="MultiPickerView Sample">
 
     <ContentPage.Content>
@@ -20,9 +18,15 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="VerticalTextAlignment" Value="Center" />
+                </Style>
+            </Grid.Resources>
 
             <ext:NumbersPickerView
                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
@@ -33,7 +37,7 @@
                 ColumnWidth="{Binding Text, Source={x:Reference entryColumnWidth}}"
             />
 
-            <Label Text="Value:" Grid.Row="1" Grid.Column="0"/>
+            <Label Text="Value:" Grid.Row="1" Grid.Column="0" />
             <Entry x:Name="entryValue" Grid.Row="1" Grid.Column="1" Text="123.45" />
 
             <Label Text="IntegerDigitLen:" Grid.Row="2" Grid.Column="0" />
@@ -47,8 +51,6 @@
 
             <Label Text="ColumnWidth:" Grid.Row="5" Grid.Column="0" />
             <Entry x:Name="entryColumnWidth" Grid.Row="5" Grid.Column="1" Text="30" />
-
         </Grid>
-
     </ContentPage.Content>
 </ContentPage>

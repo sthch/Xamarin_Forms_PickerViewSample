@@ -1,140 +1,128 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace XamForms.PickerView
 {
-	public partial class NumbersPickerView : ContentView
-	{
-	    #region FontSize
+    public partial class NumbersPickerView : ContentView
+    {
+        #region FontSize
+        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(NumbersPickerView), -1.0,
+            defaultValueCreator: bindable => Device.GetNamedSize(NamedSize.Default, (NumbersPickerView)bindable),
+            propertyChanged: OnFontSizeChanged);
 
-	    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(NumbersPickerView), -1.0,
-	        defaultValueCreator: bindable => Device.GetNamedSize(NamedSize.Default, (NumbersPickerView)bindable),
-	        propertyChanged:OnFontSizeChanged);
+        public double FontSize
+        {
+            get => (double)GetValue(FontSizeProperty);
+            set => SetValue(FontSizeProperty, value);
+        }
 
-	    public double FontSize
-	    {
-	        get { return (double)GetValue(FontSizeProperty); }
-	        set { SetValue(FontSizeProperty, value); }
-	    }
+        private static void OnFontSizeChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var view = (NumbersPickerView)bindable;
+            var vm = view.grid.BindingContext as NumbersPickerViewModel;
+            vm.FontSize = (double)(newValue ?? Device.GetNamedSize(NamedSize.Default, (NumbersPickerView)bindable));
+        }
+        #endregion
 
-	    private static void OnFontSizeChanged(BindableObject bindable, object oldvalue, object newvalue)
-	    {
-	        var view = (NumbersPickerView) bindable;
-	        var vm = view.grid.BindingContext as NumbersPickerViewModel;
-	        vm.FontSize = (double)(newvalue ?? Device.GetNamedSize(NamedSize.Default, (NumbersPickerView)bindable));
-	    }
+        #region ColumnWidth
+        public static readonly BindableProperty ColumnWidthProperty = BindableProperty.Create(nameof(ColumnWidth), typeof(double), typeof(NumbersPickerView), 17d,
+            propertyChanged: OnColumnWidthChanged);
 
-	    #endregion
+        public double ColumnWidth
+        {
+            get => (double)GetValue(ColumnWidthProperty);
+            set => SetValue(ColumnWidthProperty, value);
+        }
 
-	    #region ColumnWidth
+        private static void OnColumnWidthChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (newValue == null)
+            {
+                return;
+            }
 
-	    public static readonly BindableProperty ColumnWidthProperty = BindableProperty.Create(nameof(ColumnWidth), typeof(double), typeof(NumbersPickerView), 17d,
-	        propertyChanged:OnColumnWidthChanged);
+            var view = (NumbersPickerView)bindable;
+            var vm = view.grid.BindingContext as NumbersPickerViewModel;
+            vm.ColumnWidth = (double)newValue;
+        }
+        #endregion
 
-	    public double ColumnWidth
-	    {
-	        get { return (double)GetValue(ColumnWidthProperty); }
-	        set { SetValue(ColumnWidthProperty, value); }
-	    }
+        #region Value
+        public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(decimal), typeof(NumbersPickerView), 0M, propertyChanged: OnValueChanged);
 
-	    private static void OnColumnWidthChanged(BindableObject bindable, object oldvalue, object newvalue)
-	    {
-			if (newvalue == null)
-			{
-				return;
-			}
+        public decimal Value
+        {
+            get => (decimal)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
+        }
 
-	        var view = (NumbersPickerView) bindable;
-	        var vm = view.grid.BindingContext as NumbersPickerViewModel;
-	        vm.ColumnWidth = (double)newvalue;
-	    }
+        private static void OnValueChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var view = (NumbersPickerView)bindable;
+            var vm = view.grid.BindingContext as NumbersPickerViewModel;
+            vm.Value = (decimal)(newValue ?? ValueProperty.DefaultValue);
+        }
+        #endregion
 
-	    #endregion
+        #region IntegerDigitLength
+        public static readonly BindableProperty IntegerDigitLengthProperty = BindableProperty.Create(nameof(IntegerDigitLength), typeof(int), typeof(NumbersPickerView), 3,
+            propertyChanged: OnIntegerDigitLengthChanged);
 
-	    #region Value
+        public int IntegerDigitLength
+        {
+            get => (int)GetValue(IntegerDigitLengthProperty);
+            set => SetValue(IntegerDigitLengthProperty, value);
+        }
 
-	    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(decimal), typeof(NumbersPickerView), 0M, propertyChanged:OnValueChanged);
+        private static void OnIntegerDigitLengthChanged(BindableObject bindable, object oldValue, object newValue)
+        {
 
-	    public decimal Value
-	    {
-	        get { return (decimal)GetValue(ValueProperty); }
-	        set { SetValue(ValueProperty, value); }
-	    }
+            var view = (NumbersPickerView)bindable;
+            var vm = view.grid.BindingContext as NumbersPickerViewModel;
+            vm.IntegerDigitLength = (int)(newValue ?? IntegerDigitLengthProperty.DefaultValue);
+        }
+        #endregion
 
-	    private static void OnValueChanged(BindableObject bindable, object oldvalue, object newvalue)
-	    {
-	        var view = (NumbersPickerView) bindable;
-	        var vm = view.grid.BindingContext as NumbersPickerViewModel;
-	        vm.Value = (decimal)(newvalue ?? ValueProperty.DefaultValue);
-	    }
+        #region DecimalDigitLength
+        public static readonly BindableProperty DecimalDigitLengthProperty = BindableProperty.Create(nameof(DecimalDigitLength), typeof(int), typeof(NumbersPickerView), 0,
+            propertyChanged: OnDecimalDigitLengthChanged);
 
-	    #endregion
+        public int DecimalDigitLength
+        {
+            get => (int)GetValue(DecimalDigitLengthProperty);
+            set => SetValue(DecimalDigitLengthProperty, value);
+        }
 
-	    #region IntegerDigitLength
+        private static void OnDecimalDigitLengthChanged(BindableObject bindable, object oldValue, object newValue)
+        {
 
-	    public static readonly BindableProperty IntegerDigitLengthProperty = BindableProperty.Create(nameof(IntegerDigitLength), typeof(int), typeof(NumbersPickerView), 3,
-	        propertyChanged: OnIntegerDigitLengthChanged);
+            var view = (NumbersPickerView)bindable;
+            var vm = view.grid.BindingContext as NumbersPickerViewModel;
+            vm.DecimalDigitLength = (int)(newValue ?? DecimalDigitLengthProperty.DefaultValue);
+        }
+        #endregion
 
-		public int IntegerDigitLength
-	    {
-	        get { return (int)GetValue(IntegerDigitLengthProperty); }
-	        set { SetValue(IntegerDigitLengthProperty, value); }
-	    }
+        public NumbersPickerView()
+        {
+            InitializeComponent();
 
-	    private static void OnIntegerDigitLengthChanged(BindableObject bindable, object oldvalue, object newvalue)
-	    {
+            var vm = grid.BindingContext as NumbersPickerViewModel;
+            vm.PropertyChanged += ViewModel_OnPropertyChanged;
 
-	        var view = (NumbersPickerView)bindable;
-	        var vm = view.grid.BindingContext as NumbersPickerViewModel;
-	        vm.IntegerDigitLength = (int)(newvalue ?? IntegerDigitLengthProperty.DefaultValue);
-	    }
+            // View の既定値を ViewModel に伝搬
+            vm.IntegerDigitLength = IntegerDigitLength;
+            vm.DecimalDigitLength = DecimalDigitLength;
+            vm.Value = Value;
+            vm.ColumnWidth = ColumnWidth;
+        }
 
-		#endregion
-
-	    #region DecimalDigitLength
-
-	    public static readonly BindableProperty DecimalDigitLengthProperty = BindableProperty.Create(nameof(DecimalDigitLength), typeof(int), typeof(NumbersPickerView), 0,
-	        propertyChanged: OnDecimalDigitLengthChanged);
-
-	    public int DecimalDigitLength
-	    {
-	        get { return (int)GetValue(DecimalDigitLengthProperty); }
-	        set { SetValue(DecimalDigitLengthProperty, value); }
-	    }
-
-	    private static void OnDecimalDigitLengthChanged(BindableObject bindable, object oldvalue, object newvalue)
-	    {
-
-	        var view = (NumbersPickerView)bindable;
-	        var vm = view.grid.BindingContext as NumbersPickerViewModel;
-	        vm.DecimalDigitLength = (int)(newvalue ?? DecimalDigitLengthProperty.DefaultValue);
-	    }
-
-	    #endregion
-
-		public NumbersPickerView()
-		{
-			InitializeComponent();
-
-		    var vm = grid.BindingContext as NumbersPickerViewModel;
-		    vm.PropertyChanged += ViewModel_OnPropertyChanged;
-
-			// View の既定値を ViewModel に伝搬
-			vm.IntegerDigitLength = IntegerDigitLength;
-			vm.DecimalDigitLength = DecimalDigitLength;
-			vm.Value = Value;
-		    vm.ColumnWidth = ColumnWidth;
-		}
-
-	    private void ViewModel_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-	    {
-			var vm = sender as NumbersPickerViewModel;
-	        if (e.PropertyName == "Value")
-	        {
-	            Value = vm.Value;
-	        }
-	    }
-	}
+        private void ViewModel_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var vm = sender as NumbersPickerViewModel;
+            if (e.PropertyName == nameof(Value))
+            {
+                Value = vm.Value;
+            }
+        }
+    }
 }

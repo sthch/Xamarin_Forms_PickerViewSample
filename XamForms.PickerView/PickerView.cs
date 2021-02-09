@@ -1,78 +1,72 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Xamarin.Forms;
 
 namespace XamForms.PickerView
 {
-	public class PickerView : View
-	{
-		#region ItemsSource
-		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-			typeof(IEnumerable), typeof(PickerView), null);
+    public class PickerView : View
+    {
+        #region ItemsSource
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
+            typeof(IEnumerable), typeof(PickerView));
 
-		public IEnumerable ItemsSource
-		{
-			get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-			set { SetValue(ItemsSourceProperty, value); }
-		}
-		#endregion
+        public IEnumerable ItemsSource
+        {
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
+        }
+        #endregion
 
-		#region SelectedIndex
-		public static readonly BindableProperty SelectedIndexProperty =
-			BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(PickerView), -1, BindingMode.TwoWay,
-				coerceValue: CoerceSelectedIndex);
+        #region SelectedIndex
+        public static readonly BindableProperty SelectedIndexProperty =
+            BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(PickerView), -1, BindingMode.TwoWay,
+                coerceValue: CoerceSelectedIndex);
 
+        public int SelectedIndex
+        {
+            get => (int)GetValue(SelectedIndexProperty);
+            set => SetValue(SelectedIndexProperty, value);
+        }
 
-		public int SelectedIndex
-		{
-			get { return (int)GetValue(SelectedIndexProperty); }
-			set { SetValue(SelectedIndexProperty, value); }
-		}
+        private static object CoerceSelectedIndex(BindableObject bindable, object value)
+        {
+            if (value == null)
+            {
+                return 0;
+            }
+            return value;
+        }
+        #endregion
 
-		private static object CoerceSelectedIndex(BindableObject bindable, object value)
-		{
-			if (value == null)
-			{
-				return 0;
-			}
-			return value;
-		}
-		#endregion
+        #region FontSize
+        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(PickerView), -1.0,
+               defaultValueCreator: bindable => Device.GetNamedSize(NamedSize.Default, (PickerView)bindable),
+               coerceValue: CoerceFontSize);
 
-		#region FontSize
+        public double FontSize
+        {
+            get => (double)GetValue(FontSizeProperty);
+            set => SetValue(FontSizeProperty, value);
+        }
 
-		public static readonly BindableProperty FontSizeProperty = BindableProperty.Create("FontSize", typeof(double), typeof(PickerView), -1.0,
-       		defaultValueCreator: bindable => Device.GetNamedSize(NamedSize.Default, (PickerView)bindable), 
-           	coerceValue:CoerceFontSize);
+        private static object CoerceFontSize(BindableObject bindable, object value)
+        {
+            if (value == null)
+            {
+                return Device.GetNamedSize(NamedSize.Default, (PickerView)bindable);
+            }
+            return value;
+        }
+        #endregion
 
-		public double FontSize
-		{
-			get { return (double)GetValue(FontSizeProperty); }
-			set { SetValue(FontSizeProperty, value); }
-		}
+        #region FontFamily
+        public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(PickerView), default(string));
 
-		private static object CoerceFontSize(BindableObject bindable, object value)
-		{
-			if (value == null)
-			{
-				return Device.GetNamedSize(NamedSize.Default, (PickerView)bindable);
-			}
-			return value;
-		}
-		#endregion
+        public string FontFamily
+        {
+            get => (string)GetValue(FontFamilyProperty);
+            set => SetValue(FontFamilyProperty, value);
+        }
+        #endregion
 
-		#region FontFamily
-
-		public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create("FontFamily", typeof(string), typeof(PickerView), default(string));
-
-		public string FontFamily
-		{
-			get { return (string)GetValue(FontFamilyProperty); }
-			set { SetValue(FontFamilyProperty, value); }
-		}
-
-		#endregion
-
-	}
-
+    }
 }

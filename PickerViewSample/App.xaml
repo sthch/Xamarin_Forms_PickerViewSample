@@ -1,6 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="PickerViewSample.App">
-	<Application.Resources>
-		<!-- Application resource dictionary -->
-	</Application.Resources>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="PickerViewSample.App">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#039BE5</Color>
+            <Color x:Key="LightBackground">#FAFAFA</Color>
+            <Color x:Key="DarkBackground">#212121</Color>
+            <Color x:Key="LightText">#212121</Color>
+            <Color x:Key="DarkText">#FAFAFA</Color>
+            <Style x:Key="CommonContentPage" TargetType="ContentPage">
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="{StaticResource DarkText}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>
